@@ -9,12 +9,23 @@ const app: express.Application = express();
 const port = process.env.PORT || 80
 const address = `localhost:${port}`;
 
-const corsOptinos = {
-  origin: 'localhost',
-  optionsSuccessStatus: 200
-};
+app.use(cors({
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "X-Access-Token",
+    "Authorization",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Methods",
+  ],
+  "methods": 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+  "preflightContinue": true,
+  "origin": '*',
+}));
 
-app.use(cors(corsOptinos));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
