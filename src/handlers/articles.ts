@@ -1,55 +1,21 @@
 import express from 'express';
-import verifyAuthToken from '../middlewares/auth';
-import {ProductController} from '../models/articles';
+import {ArticleController} from '../models/articles';
 
-const productsRoutes = (app: express.Application) => {
-    app.get("/products", index);
-    app.get("/products/:productId", show);
-    app.post("/products",verifyAuthToken , create);
+const articleRoutes = (app: express.Application) => {
+    app.get("/articles", index);
+    app.post("/articles", create);
 };
 
-const productController = new ProductController();
+const articleController = new ArticleController();
 
 const index = async (
     req: express.Request,
     res: express.Response
 ) => {
     try {
-        // Get All users
-        const products = await productController.index();
-        res.json({products: [products]});
-
-    } catch (error) {
-        res.status(400)
-        .json(error);
-    }
-
-};
-
-const show = async (
-    req: express.Request,
-    res: express.Response
-) => {
-    
-    // Request Body
-    const productReqId : string = req.params.productId as string;
-    
-    if(Number.isNaN(parseInt(productReqId))){
-        res.status(400)
-        .json({error: "Bad Request: Product Id should be a number"});
-        return;
-    }
-
-    try {
-        const productId : number = parseInt(productReqId);
-
-        // Search user
-        const foundProduct = await productController.show(productId);
-
-        if(foundProduct != null)
-            res.json({product: foundProduct});
-        else
-            res.json({message: "Product Does not exist"});
+        // Get All Articles
+        const articles = await articleController.index();
+        res.json({articles: [articles]});
 
     } catch (error) {
         res.status(400)
@@ -63,32 +29,39 @@ const create = async (
 ) => {
 
     // Request Body
-    let productName : string = req.body.name as string;
-    const productPrice : string = req.body.price as string;
-    
-    if(Number.isNaN(parseInt(productPrice))){
-        res.status(400)
-        .json({error: "Bad Request: Product Price should be a number"});
-        return;
-    }
+    let articleTitle : string = req.body.articleTitle as string;
+    let articleBody : string = req.body.price as string;
+    let articleImage : string = req.body.price as string || "";
 
-    if( productName == undefined ||
-        productName.replace(/ /g, "").length == 0 
+    if( articleTitle == undefined ||
+        articleTitle.replace(/ /g, "").length == 0 
     ){
         res.status(400)
-        .json({error: "Bad Request: Product Name Can't be empty"});
+        .json({error: "Bad Request: Article Title  Can't be empty"});
         return;
     }
 
-    productName =  productName.replace(/ /g, "");
+    if( articleBody == undefined ||
+        articleBody.replace(/ /g, "").length == 0 
+    ){
+        res.status(400)
+        .json({error: "Bad Request: ArticleBody  Can't be empty"});
+        return;
+    }
+
+    articleTitle =  articleTitle.replace(/ /g, "");
+    articleBody =  articleBody.replace(/ /g, "");
 
     try {
-        // Validate as required here
-        const actualPrice : number =  parseInt(productPrice);
-        
-        // Create Product
-        const createdProduct = await productController.create(productName, actualPrice);
-        res.json({product: createdProduct});
+        // Create Article
+        const createdArticle = await articleController.create(
+            articleTitle, 
+            articleBody,
+            articleImage
+            );
+        res.json({
+            article: createdArticle
+        });
 
     } catch (error) {
         res.status(400)
@@ -96,4 +69,4 @@ const create = async (
     }
 };
 
-export default productsRoutes;
+export default articleRoutes;

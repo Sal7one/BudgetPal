@@ -14,9 +14,16 @@ export const {
   JWT_SECRET,
   SALT_ROUNDS,
   PEPPER,
-  STATUS_ACTIVE = "ACTIVE",
-  STATUS_COMPLETE = "COMPLETE",
+  Categories = [
+    'EMPTY FOR TESTING',
+    'food',
+    'transportation',
+    'entertainment',
+    'utilities',
+    'medical & healthcare',
+    'investing and savings',
+    'insurance',
+    'housing',
+    'miscellaneous',
+  ],
 } = process.env;
-
-
-

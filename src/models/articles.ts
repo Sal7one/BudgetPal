@@ -41,7 +41,7 @@ export class ArticleController {
         articleTitle, articleBody,
          image];
 
-      const sql =`INSERT INTO articles (title, body, image)`
+      const sql =`INSERT INTO articles (title, body, image_url)`
        + ` VALUES($1, $2, $3) RETURNING *`;
       
       // Connection

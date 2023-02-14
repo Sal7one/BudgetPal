@@ -34,7 +34,7 @@ export class ItemController {
 
       return items;
     } catch (err) {
-      throw new Error(`Unable to fetch Items: ${err}`);
+      throw new Error(`Unable to fetch Items of user with id of ${userId}): ${err}`);
     }
   }
 

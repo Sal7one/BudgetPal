@@ -8,15 +8,16 @@ res: express.Response,
 next: express.NextFunction
 ): void => {
     try {
-        const authorizationHeader = req.headers.authorization || "null"
-        const token = authorizationHeader.split(' ')[1]
-        jwt.verify(token, JWT_SECRET as string)
+        const authorizationHeader = req.headers.authorization || "null";
+        const token = authorizationHeader.split(' ')[1];
+        const decodedToken = jwt.verify(token, JWT_SECRET as string);
+        req.query.decodedToken = decodedToken;
         // Allowed
-        next()
+        next();
     } catch (error) {
         res.status(401);
         res.json(`invalid token ${error}`);
-        return
+        return;
     }
 }
 

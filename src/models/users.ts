@@ -10,25 +10,6 @@ export type User = {
 };
 
 export class UserController {
-  async index(): Promise<User[]> {
-    try {
-      // Query And It's data
-      const sql = "SELECT id, firstname, lastname FROM users";
-
-      // Connection
-      const conn = await client.connect();
-      const result = await conn.query(sql);
-
-      const users = result.rows;
-
-      // Release
-      conn.release();
-
-      return users;
-    } catch (err) {
-      throw new Error(`Unable to fetch users: ${err}`);
-    }
-  }
 
   async show(id: number): Promise<User | null> {
     try {

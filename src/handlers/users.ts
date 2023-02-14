@@ -5,28 +5,11 @@ import jwt from 'jsonwebtoken';
 import {UserController} from '../models/users';
 
 const usersRoutes = (app: express.Application) => {
-    app.get("/users", verifyAuthToken, index);
     app.get("/users/:userId", verifyAuthToken , show);
     app.post("/users", create);
 };
 
 const userController = new UserController();
-
-const index = async (
-    req: express.Request,
-    res: express.Response
-) => {
-    try {
-        // Get All users
-        const users = await userController.index();
-        res.json({users: users});
-
-    } catch (error) {
-        res.status(400)
-        .json(error);
-    }
-
-};
 
 const show = async (
     req: express.Request,
