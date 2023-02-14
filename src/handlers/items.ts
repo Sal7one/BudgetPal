@@ -33,7 +33,7 @@ const index = async (
         // Get All Items
         const items = await itemController.index(userId);
         res.json({
-            items: [items]
+            items: items
         });
 
     } catch (error) {

@@ -54,10 +54,12 @@ Examples
 
 User route
 
-### /users/:id (GET)
-ex: http://localhost:3000/users/2
+### /users/ (GET)
+ex: http://localhost:3000/users
+
 ```Auth: Bearer Token 
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjc1OTMzNDc4fQ.R673TIT6Y5LzqAPxhlbkaqXfqqNxGgL5qsbNuIeJz9s
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdG5hbWUiOiJTYWxlaCIsImxhc3RuYW1lIjoiQWxhbmF6aSIsInBhc3N3b3JkX2RpZ2VzdCI6IiQyYiQwNSRoMEhvWFdGTVhHUEIxcTZpMGZ5dVhlOU90Zko5SE52TDlJTHFCZjVaeTc5WDBFTVg5aXBCbSJ9LCJpYXQiOjE2NzYzODQyMDZ9.8GI_FzRDGtExDJncg5imBvV1jt9HgF52EHUCI6rHtRw
 ```
 
 Response
@@ -77,40 +79,42 @@ AUTH: NONE
 BODY RAW JSON
 ```
 {
-    "firstname": "asd",
-    "lastname": "asd",
-    "password": "asd"
+    "firstname": "Saleh",
+    "lastname": "Alanazi",
+    "password": "1234"
 }
 ```
 Response
 ```
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdyI6Iig0LGFzZCxhc2QpIn0sImlhdCI6MTY3NTkzNDIyOX0.wAP5JTAs0883PFS87ebDRfvUyg7oem0fYKbEOTsLtcM"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdG5hbWUiOiJTYWxlaCIsImxhc3RuYW1lIjoiQWxhbmF6aSIsInBhc3N3b3JkX2RpZ2VzdCI6IiQyYiQwNSRoMEhvWFdGTVhHUEIxcTZpMGZ5dVhlOU90Zko5SE52TDlJTHFCZjVaeTc5WDBFTVg5aXBCbSJ9LCJpYXQiOjE2NzYzODQyMDZ9.8GI_FzRDGtExDJncg5imBvV1jt9HgF52EHUCI6rHtRw"
 }
 ```
 
 
-Products Route
+Items Route
 
 ### /items (GET)
 AUTH: 
-NONE
-Response
 
-``` {
-    "products": [
-        [
-            {
-                "id": 1,
-                "name": "sssss",
-                "price": "123"
-            },
-            {
-                "id": 2,
-                "name": "BookAboutProgramming",
-                "price": "123"
-            }
-        ]
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdG5hbWUiOiJTYWxlaCIsImxhc3RuYW1lIjoiQWxhbmF6aSIsInBhc3N3b3JkX2RpZ2VzdCI6IiQyYiQwNSRoMEhvWFdGTVhHUEIxcTZpMGZ5dVhlOU90Zko5SE52TDlJTHFCZjVaeTc5WDBFTVg5aXBCbSJ9LCJpYXQiOjE2NzYzODQyMDZ9.8GI_FzRDGtExDJncg5imBvV1jt9HgF52EHUCI6rHtRw
+```
+Response
+``` 
+
+{
+    "items": [
+        {
+            "item_name": "DinnerAtMcDownlaods",
+            "item_price": 545.15,
+            "category_name": "Food"
+        },
+        {
+            "item_name": "DinnerAtKFc",
+            "item_price": 55.15,
+            "category_name": "Food"
+        }
     ]
 }
 ```
@@ -120,7 +124,7 @@ Response
 
 AUTH:
  ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdyI6Iig0LGFzZCxhc2QpIn0sImlhdCI6MTY3NTkzNDIyOX0.wAP5JTAs0883PFS87ebDRfvUyg7oem0fYKbEOTsLtcM
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdG5hbWUiOiJTYWxlaCIsImxhc3RuYW1lIjoiQWxhbmF6aSIsInBhc3N3b3JkX2RpZ2VzdCI6IiQyYiQwNSRoMEhvWFdGTVhHUEIxcTZpMGZ5dVhlOU90Zko5SE52TDlJTHFCZjVaeTc5WDBFTVg5aXBCbSJ9LCJpYXQiOjE2NzYzODQyMDZ9.8GI_FzRDGtExDJncg5imBvV1jt9HgF52EHUCI6rHtRw
 
 ```
 
@@ -128,8 +132,9 @@ BODY RAW JSON
 ```
 
 {
-    "price": "123",
-    "name": "Book About Programming"
+    "itemName": "Dinner At KFc",
+    "category": "Food",
+    "price": 55.15
 }
 
 ```
@@ -148,35 +153,33 @@ Response
 ```
 
 
-Orders Route
+Articles Route
 
 ### /articles GET
 
-AUTH:
- ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdyI6Iig0LGFzZCxhc2QpIn0sImlhdCI6MTY3NTkzNDIyOX0.wAP5JTAs0883PFS87ebDRfvUyg7oem0fYKbEOTsLtcM
-```
+AUTH: NONE
 
 BODY RAW JSON
 ```
-{
-    "userId": "2"
-}
+NONE
 ```
 Response
-```
-{
-    "orders": [
-        {
-            "id": 1,
-            "status": "ACTIVE",
-            "user_id": 2
-        },
-        {
-            "id": 3,
-            "status": "ACTIVE",
-            "user_id": 2
-        }
+```{
+    "articles": [
+            {
+                "id": 1,
+                "title": "An aritcle with a broken Image! ",
+                "body": "Thanks for reading!",
+                "image_url": "https://www.google.com/salehonepics.jpg",
+                "published": "2023-02-14T13:33:49.887Z"
+            },
+            {
+                "id": 2,
+                "title": "An Article with no image from the author",
+                "body": " Go buy some land or something I dont know ",
+                "image_url": "",
+                "published": "2023-02-14T13:33:53.272Z"
+            }
     ]
 }
 ```
@@ -185,26 +188,26 @@ Response
 ### /articles POST
 
 
-AUTH:
- ```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdyI6Iig0LGFzZCxhc2QpIn0sImlhdCI6MTY3NTkzNDIyOX0.wAP5JTAs0883PFS87ebDRfvUyg7oem0fYKbEOTsLtcM
-```
+AUTH: NONE (For Admin use only feature won't be provided in App)
 
 BODY RAW JSON
 ```
-{
-    "userId": "2"
+            {
+                "title": "An Article with no image from the author",
+                "body": " Go buy some land or something I dont know ",
+                "image_url": "",
+            }
 
 ```
 Response
 ```
-{
-    "order": {
-        "id": 3,
-        "status": "ACTIVE",
-        "user_id": 2
-    }
-}
+            {
+                "id": 3,
+                "title": "An Article with no image from the author",
+                "body": " Go buy some land or something I dont know ",
+                "image_url": "",
+                "published": "2023-02-14T13:33:53.272Z"
+            }
 ```
 
 There is a ".env.example" file provided please put the credentials then rename it to be ".env"

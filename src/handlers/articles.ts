@@ -15,7 +15,7 @@ const index = async (
     try {
         // Get All Articles
         const articles = await articleController.index();
-        res.json({articles: [articles]});
+        res.json({articles: articles});
 
     } catch (error) {
         res.status(400)
