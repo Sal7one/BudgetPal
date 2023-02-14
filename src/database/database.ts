@@ -21,7 +21,8 @@ if (ENV === 'test') {
     port: PORT_NUMBER,
     database: POSTGRES_TEST_DB,
     user: POSTGRES_USER,
-    password: POSTGRES_PASS
+    password: POSTGRES_PASS,
+    ssl: true
   });
 } else if (ENV === 'prod') {
   client = new Pool({
@@ -38,7 +39,8 @@ if (ENV === 'test') {
     port: PORT_NUMBER,
     database: POSTGRES_DB,
     user: POSTGRES_USER,
-    password: POSTGRES_PASS as string
+    password: POSTGRES_PASS as string,
+    ssl: true
   });
 }
 
