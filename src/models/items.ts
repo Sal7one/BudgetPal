@@ -50,7 +50,7 @@ export class ItemController {
         itemName, itemPrice,
         userId, categoryId];
 
-      const sql =`INSERT INTO items (item_name, item_price, userId, categoryId)`
+      const sql =`INSERT INTO items (item_name, item_price, user_id, category_id)`
        + ` VALUES($1, $2, $3, $4) RETURNING *`;
       
       // Connection
@@ -65,7 +65,36 @@ export class ItemController {
 
       return item;
     } catch (err) {
+      console.log(err)
       throw new Error(`Unable to Create Item  Err: ${err} `);
+    }
+  }
+
+  async remove(
+    itemId: number,
+    userId: number
+  ) : Promise<boolean> {
+    try {
+
+      // Query And It's data
+      let dataForUserItemsQuery = [itemId,userId];
+      const sql = `DELETE
+      FROM items
+      WHERE id = ($1) AND user_id = ($2)`;
+
+      // Connection
+      const conn = await client.connect();
+      const result = await conn.query(sql, dataForUserItemsQuery);
+
+      // Release
+      conn.release();
+
+      const isDeleted = result.rowCount > 0
+
+      return isDeleted;
+    } catch (err) {
+      console.log(err)
+      throw new Error(`Unable to fetch Items of user with id of ${userId}): ${err}`);
     }
   }
 }

@@ -14,7 +14,7 @@ export const {
   JWT_SECRET,
   SALT_ROUNDS,
   PEPPER,
-  Categories = [
+  Categories = ["",
     'food',
     'transportation',
     'entertainment',
