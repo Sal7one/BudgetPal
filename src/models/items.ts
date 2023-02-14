@@ -20,7 +20,7 @@ export class ItemController {
       const sql = `SELECT it.item_name, it.item_price, c.category_name
       FROM items AS it
       INNER JOIN categories as c ON c.id = it.category_id
-      WHERE it.user_id = ($1)`;
+      WHERE it.user_id = ($1) ORDER BY bought DESC`;
 
       // Connection
       const conn = await client.connect();

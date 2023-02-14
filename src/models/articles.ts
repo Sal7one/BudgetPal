@@ -12,7 +12,7 @@ export class ArticleController {
   async index(): Promise<Article[]> {
     try {
       // Query And It's data
-      const sql = "SELECT * FROM articles";
+      const sql = "SELECT * FROM articles ORDER BY published DESC";
 
       // Connection
       const conn = await client.connect();
