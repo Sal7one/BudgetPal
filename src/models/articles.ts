@@ -3,8 +3,8 @@ import client from "../database/database";
 export type Article = {
   id: number;
   title: string;
-  content: string;
-  authorId: number;
+  body: string;
+  image_url: string;
   published: Date;
 };
 
@@ -30,36 +30,19 @@ export class ArticleController {
     }
   }
 
-  async show(productId: number): Promise<Product | null> {
+  async create(
+    articleTitle: string,
+    articleBody: string,
+    image: string,
+     ): Promise<Article> {
     try {
       // Query And It's data
-      const productData = [productId];
-      const sql = "SELECT id, name, price FROM products WHERE id=($1)";
+      const productData = [
+        articleTitle, articleBody,
+         image];
 
-      // Connection
-      const conn = await client.connect();
-      const result = await conn.query(sql, productData);
-
-      // Result
-      const product = result.rows[0];
-
-      if(product === undefined)
-        return null;
-
-      // Release
-      conn.release();
-
-      return product;
-    } catch (err) {
-      throw new Error(`Unable to Get Prodcut with ID (${productId}): ${err}`);
-    }
-  }
-
-  async create(productName: string, productPrice: number): Promise<Product> {
-    try {
-      // Query And It's data
-      const productData = [productName, productPrice];
-      const sql ="INSERT INTO products (name, price) VALUES($1, $2) RETURNING *";
+      const sql =`INSERT INTO articles (title, body, image)`
+       + ` VALUES($1, $2, $3) RETURNING *`;
       
       // Connection
       const conn = await client.connect();
@@ -73,7 +56,7 @@ export class ArticleController {
 
       return product;
     } catch (err) {
-      throw new Error(`Unable to Create Prodcut with Info (${productName}, ${productPrice}): ${err}`);
+      throw new Error(`Unable to Create Prodcut with Info (${articleTitle}, ${articleBody}): ${err}`);
     }
   }
 }
