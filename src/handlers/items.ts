@@ -27,13 +27,7 @@ const index = async (
         return;
     }
     
-    let userId = token.user.id;
-
-    if(Number.isNaN(parseInt(userId))){
-        res.status(400)
-        .json({error: "Bad Request: User Id should be a number"});
-        return;
-    }
+    let userId : number = token.user.id;
 
     try {
         // Get All Items

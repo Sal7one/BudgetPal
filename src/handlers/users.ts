@@ -2,10 +2,11 @@ import express from 'express';
 import verifyAuthToken from '../middlewares/auth';
 import {JWT_SECRET} from '../utils/constatns';
 import jwt from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import {UserController} from '../models/users';
 
 const usersRoutes = (app: express.Application) => {
-    app.get("/users/:userId", verifyAuthToken , show);
+    app.get("/users/", verifyAuthToken , show);
     app.post("/users", create);
 };
 
@@ -17,19 +18,19 @@ const show = async (
 ) => {
     
     // Request Body
-    const userReqId : string = req.params.userId as string
-    
-    if(Number.isNaN(parseInt(userReqId))){
-        res.status(400)
-        .json({error: "Bad Request: User Id should be a number"});
+    const token = req.query.token as JwtPayload;
+
+    if(
+        token == undefined
+        ){
+        res.status(500)
+        .json({error: "Server Error: This one is on us"});
         return;
     }
+    
+    let userId : number = token.user.id;
 
     try {
-        // Validate as required here
-        const idWithoutSpaces : string = userReqId.replace(/ /g, "");
-        const userId : number = parseInt(idWithoutSpaces);
-
         // Search user
         const foundUser = await userController.show(userId);
 
