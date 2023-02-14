@@ -153,7 +153,7 @@ const create = async (
    
     try {
         // Validate as required here
-        email =  lastName.replace(/ /g, "");
+        email =  email.replace(/ /g, "");
         firstName = firstName.replace(/ /g, "");
         lastName =  lastName.replace(/ /g, "");
         password =  password.replace(/ /g, "");
@@ -176,6 +176,8 @@ const create = async (
             });
         }
     } catch (error) {
+        console.log("Error crating user");
+        console.log(error);
         res.status(400)
         .json(error);
     }

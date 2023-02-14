@@ -81,7 +81,7 @@ export class UserController {
 
       return user;
     } catch (err) {
-      const error =  err as string
+      const error =  " " +err
       if(error.includes("users_email_key") || error.includes("already exists"))
       return null
       throw new Error(
