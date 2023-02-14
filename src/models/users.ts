@@ -39,7 +39,7 @@ export class UserController {
     try {
       // Query And It's data
       const userData = [id];
-      const sql = "SELECT id, firstname, lastname FROM users WHERE id=($1)";
+      const sql = "SELECT id, email, firstname, lastname FROM users WHERE id=($1)";
 
       // Connection
       const conn = await client.connect();
@@ -67,7 +67,7 @@ export class UserController {
       const userData = [email, firstname, lastname, passHash];
       const sql =
         "INSERT INTO users (email, firstname, lastname, password_digest)" +
-        "VALUES($1, $2, $3, $4) RETURNING email, firstname, lastname";
+        "VALUES($1, $2, $3, $4) RETURNING id, email, firstname, lastname";
 
       // Connection
       const conn = await client.connect();

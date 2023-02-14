@@ -32,7 +32,8 @@ const index = async (
     try {
         // Get All Items
         const items = await itemController.index(userId);
-        res.json({
+        res.status(200)
+        .json({
             items: items
         });
 
@@ -111,7 +112,8 @@ const create = async (
             actualCategoryId
             );
 
-        res.json({item: createdItem});
+        res.status(200)
+        .json({item: createdItem});
 
     } catch (error) {
         res.status(400)

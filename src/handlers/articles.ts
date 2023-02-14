@@ -15,7 +15,8 @@ const index = async (
     try {
         // Get All Articles
         const articles = await articleController.index();
-        res.json({articles: articles});
+        res.status(200)
+        .json({articles: articles});
 
     } catch (error) {
         res.status(400)
@@ -59,7 +60,8 @@ const create = async (
             articleBody,
             articleImage
             );
-        res.json({
+            res.status(200)
+            .json({
             article: createdArticle
         });
 

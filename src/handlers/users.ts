@@ -35,12 +35,18 @@ const show = async (
 
     try {
         // Search user
+        console.log("token is ")
+        console.log(token)
+        console.log("userid ")
+        console.log(userId)
         const foundUser = await userController.show(userId);
 
         if(foundUser != null)
-            res.json({user: foundUser});
+        res.status(200)
+        .json({user: foundUser});
         else
-            res.json({message: "User does not exist"});
+            res.status(404)
+            .json({message: "User does not exist"});
 
     } catch (error) {
         res.status(400)
