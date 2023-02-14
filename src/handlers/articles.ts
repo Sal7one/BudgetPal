@@ -50,8 +50,8 @@ const create = async (
         return;
     }
 
-    articleTitle =  articleTitle.replace(/ /g, "");
-    articleBody =  articleBody.replace(/ /g, "");
+    articleTitle =  articleTitle;
+    articleBody =  articleBody;
 
     try {
         // Create Article

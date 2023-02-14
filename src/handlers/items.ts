@@ -88,6 +88,7 @@ const create = async (
         return;
     }
 
+     // TODO HANDLE BROKEN TOKEN OR FAKE OR USER NOT EXSISTING
     const token = req.query.token as JwtPayload;
 
     if(
