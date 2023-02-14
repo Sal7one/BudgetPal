@@ -30,8 +30,8 @@ const create = async (
 
     // Request Body
     let articleTitle : string = req.body.articleTitle as string;
-    let articleBody : string = req.body.price as string;
-    let articleImage : string = req.body.price as string || "";
+    let articleBody : string = req.body.articleBody as string;
+    let articleImage : string = req.body.articleImage as string || "";
 
     if( articleTitle == undefined ||
         articleTitle.replace(/ /g, "").length == 0 
@@ -45,7 +45,7 @@ const create = async (
         articleBody.replace(/ /g, "").length == 0 
     ){
         res.status(400)
-        .json({error: "Bad Request: ArticleBody  Can't be empty"});
+        .json({error: "Bad Request: Article Body  Can't be empty"});
         return;
     }
 

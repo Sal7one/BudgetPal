@@ -26,7 +26,7 @@ export class ArticleController {
 
       return products;
     } catch (err) {
-      throw new Error(`Unable to fetch products: ${err}`);
+      throw new Error(`Unable to fetch articles: ${err}`);
     }
   }
 
