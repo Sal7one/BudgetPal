@@ -6,7 +6,7 @@ import itemsRouter from "./handlers/items";
 import cors from 'cors';
 
 const app: express.Application = express();
-const port = 3000;
+const port = process.env.PORT || 80
 const address = `localhost:${port}`;
 
 const corsOptinos = {
