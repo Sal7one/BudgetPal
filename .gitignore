@@ -1,0 +1,4 @@
+node_modules
+dist 
+build
+# I Would add .env but we need it for grading

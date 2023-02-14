@@ -1,0 +1,10 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "budget_pal_test",
+      "user": "saleh",
+      "password": "1234"
+    }
+  }
+
