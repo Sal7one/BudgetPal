@@ -9,7 +9,7 @@ import { PEPPER, SALT_ROUNDS } from "../utils/constatns";
 
 const usersRoutes = (app: express.Application) => {
     app.get("/users", verifyAuthToken , show);
-    app.get("/users/login", login);
+    app.post("/users/login", login);
     app.post("/users", create);
 };
 
@@ -100,7 +100,8 @@ const login = async (
                     .json({"message": "Email or Password is incorrect"});
                 }
              }else{
-                res.json({message: "User does not exist"});
+                res.status(404)
+                .json({message: "User does not exist"});
              }
 
     } catch (error) {
