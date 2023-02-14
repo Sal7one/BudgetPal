@@ -86,7 +86,12 @@ const login = async (
         // Get user
         const foundUser = await userController.getUserByEmail(email);
              if(foundUser != null){
-                if(foundUser.password == hash){
+                if(
+                    bcrypt.compareSync(
+                        `${password}${PEPPER}`,
+                        foundUser['password_digest']
+                      )
+                ){
                     const token = jwt.sign({user: getUserTokenObject(foundUser)}, JWT_SECRET as string);
                     res.status(200)
                     .json({token: token});
@@ -99,6 +104,8 @@ const login = async (
              }
 
     } catch (error) {
+        console.log("Error loggin user in ");
+        console.log(error);
         res.status(400)
         .json(error);
     }
