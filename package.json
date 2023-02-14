@@ -4,7 +4,7 @@
   "description": "Thing and thing",
   "main": "src/app.ts",
   "scripts": {
-    "start": "cross-env ENV=dev node dist/src/app.js",
+    "start": "cross-env ENV=test node dist/src/app.js",
     "watch": "tsc-watch --esModuleInterop src/app.ts --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
     "build": "npx tsc",
     "lint": "eslint --ignore-path .eslintignore --ext .ts .",

@@ -143,10 +143,11 @@ const create = async (
     
     if(
         email == undefined ||
-        email.replace(/ /g, "").length == 0 
+        email.replace(/ /g, "").length == 0 ||
+        !email.includes("@")
         ){
            res.status(400)
-           .json({error: "Bad Request: Email Can't be empty"});
+           .json({error: "Bad Request: Email is invalid or missing"});
            return;
        }
    
@@ -164,10 +165,16 @@ const create = async (
       );
         // Create user
         const createdUser = await userController.create(email, firstName, lastName, hash);
-        const token = jwt.sign({user: getUserTokenObject(createdUser)}, JWT_SECRET as string);
-        res.status(200)
-        .json({token: token});
-
+        if(createdUser!= null){
+            const token = jwt.sign({user: getUserTokenObject(createdUser)}, JWT_SECRET as string);
+            res.status(200)
+            .json({token: token});
+        }else{
+            res.status(401)
+            .json({
+                "message": "Email Already exisits"
+            });
+        }
     } catch (error) {
         res.status(400)
         .json(error);

@@ -60,7 +60,7 @@ export class UserController {
     }
   }
 
-  async create(email :string, firstname: string, lastname: string, passHash: string): Promise<User> {
+  async create(email :string, firstname: string, lastname: string, passHash: string): Promise<User | null> {
     try {
 
       // Query And It's data
@@ -81,7 +81,9 @@ export class UserController {
 
       return user;
     } catch (err) {
-      console.log(err)
+      const error =  err as string
+      if(error.includes("users_email_key") || error.includes("already exists"))
+      return null
       throw new Error(
         `unable create user (${firstname} ${lastname}): ${err}`
       );
