@@ -35,10 +35,6 @@ const show = async (
 
     try {
         // Search user
-        console.log("token is ")
-        console.log(token)
-        console.log("userid ")
-        console.log(userId)
         const foundUser = await userController.show(userId);
 
         if(foundUser != null)
@@ -200,6 +196,7 @@ const create = async (
 
 function getUserTokenObject(user: User) {
     return {
+         "id": user.id,
          "email": user.email,
          "firstname": user.firstname,
          "lastname": user.lastname
