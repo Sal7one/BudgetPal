@@ -1,4 +1,5 @@
 import express from 'express';
+import { JwtPayload } from 'jsonwebtoken';
 import verifyAuthToken from '../middlewares/auth';
 import { ItemController } from '../models/items';
 import { Categories } from '../utils/constatns';
@@ -15,28 +16,36 @@ const index = async (
     res: express.Response
 ) => {
 
-    // const userId : string | undefined = req.query.decodedToken;
+    const token = req.query.token as JwtPayload;
 
-    console.log("Important")
-    console.log(req.query.decodedToken)
-    // if(Number.isNaN(parseInt(userId))){
-    //     res.status(400)
-    //     .json({error: "Bad Request: User Id should be a number"});
-    //     return;
-    // }
+    if(
+        token == undefined
+        ){
+        res.status(500)
+        .json({error: "Server Error: This one is on us"});
+        return;
+    }
+    
+    let userId = token.user.id;
 
-    // try {
-    //     Get All Items
-    //     const actualuserId: number =  parseInt(userId);
-    //     const items = await itemController.index(actualuserId);
-    //     res.json({
-    //         items: [items]
-    //     });
+    if(Number.isNaN(parseInt(userId))){
+        res.status(400)
+        .json({error: "Bad Request: User Id should be a number"});
+        return;
+    }
 
-    // } catch (error) {
-    //     res.status(400)
-    //     .json(error);
-    // }
+    try {
+        // Get All Items
+        const actualuserId: number =  parseInt(userId);
+        const items = await itemController.index(actualuserId);
+        res.json({
+            items: [items]
+        });
+
+    } catch (error) {
+        res.status(400)
+        .json(error);
+    }
 
 };
 

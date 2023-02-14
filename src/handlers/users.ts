@@ -82,7 +82,7 @@ const create = async (
 
     try {
         // Validate as required here
-        firstName = firstName.trim().replace(/ /g, "");
+        firstName = firstName.replace(/ /g, "");
         lastName =  lastName.replace(/ /g, "");
         password =  password.replace(/ /g, "");
         

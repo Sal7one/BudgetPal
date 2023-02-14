@@ -5,12 +5,16 @@
 
 **Create user**
 
+Connect To DB as postgres user (root)
 ```shell
 CREATE USER saleh WITH PASSWORD '1234';
+ALTER ROLE saleh WITH SUPERUSER;
+
 ```
 
 **Create Databases**
 
+Connect to postgres as the user you made (saleh)
 ```shell
 #Dev Database
 CREATE DATABASE budgetpal;
@@ -22,15 +26,20 @@ CREATE DATABASE budgetpal_test;
 **GRANT all privileges to the user in the created databases**
 
 ```shell
+
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO saleh;
 \c budgetpal
-GRANT ALL PRIVILEGES ON DATABASE store_api_dev TO saleh;
-ALTER DATABASE store_api_dev OWNER TO saleh;
+GRANT ALL PRIVILEGES ON DATABASE budgetpal TO saleh;
+ALTER DATABASE budgetpal OWNER TO saleh;
 \c budgetpal_test
-GRANT ALL PRIVILEGES ON DATABASE store_api_test TO saleh;
-ALTER DATABASE store_api_test OWNER TO saleh;
+GRANT ALL PRIVILEGES ON DATABASE budgetpal_test TO saleh;
+ALTER DATABASE budgetpal_test OWNER TO saleh;
 ```
 
+- Run SQL Commands to create tables from db.sql
+``
+
+``
 # Test 
 
 ```

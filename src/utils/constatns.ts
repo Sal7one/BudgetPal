@@ -15,7 +15,6 @@ export const {
   SALT_ROUNDS,
   PEPPER,
   Categories = [
-    'EMPTY FOR TESTING',
     'food',
     'transportation',
     'entertainment',
@@ -27,3 +26,4 @@ export const {
     'miscellaneous',
   ],
 } = process.env;
+

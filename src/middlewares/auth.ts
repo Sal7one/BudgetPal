@@ -1,5 +1,5 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import {JWT_SECRET} from '../utils/constatns'
 
 const verifyAuthToken = (
@@ -10,8 +10,9 @@ next: express.NextFunction
     try {
         const authorizationHeader = req.headers.authorization || "null";
         const token = authorizationHeader.split(' ')[1];
-        const decodedToken = jwt.verify(token, JWT_SECRET as string);
-        req.query.decodedToken = decodedToken;
+        const decodedToken : JwtPayload = jwt.verify(token, JWT_SECRET as string) as JwtPayload;
+        req.query.token = decodedToken;
+        
         // Allowed
         next();
     } catch (error) {

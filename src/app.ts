@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import usersRouter from "./handlers/users";
-import productsRouter from "./handlers/articles";
-import ordersRouter from "./handlers/orders";
+import articleRoutes from "./handlers/articles";
+import itemsRouter from "./handlers/items";
 import cors from 'cors';
 
 const app: express.Application = express();
@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 usersRouter(app)
-productsRouter(app)
-ordersRouter(app)
+articleRoutes(app)
+itemsRouter(app)
 
 app.get('/', (req: express.Request, res: express.Response) => {
   res

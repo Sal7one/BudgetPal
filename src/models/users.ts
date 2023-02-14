@@ -62,6 +62,7 @@ export class UserController {
 
       return user;
     } catch (err) {
+      console.log(err)
       throw new Error(
         `unable create user (${firstname} ${lastname}): ${err}`
       );
