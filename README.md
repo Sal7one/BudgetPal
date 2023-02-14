@@ -39,18 +39,9 @@ ALTER DATABASE budgetpal_test OWNER TO saleh;
 - Run SQL Commands to create tables from db.sql
 ``
 
-``
-# Test 
-
-```
- npm run test
- 
- ```
-
 # Api Refrence
 
 Examples 
-
 
 User route
 
@@ -209,6 +200,14 @@ Response
                 "published": "2023-02-14T13:33:53.272Z"
             }
 ```
+
+``
+# Test 
+
+```
+ npm run test
+ 
+ ```
 
 There is a ".env.example" file provided please put the credentials then rename it to be ".env"
 

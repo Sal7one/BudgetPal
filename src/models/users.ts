@@ -1,15 +1,39 @@
 import client from "../database/database";
-import bcrypt from "bcrypt";
-import { PEPPER, SALT_ROUNDS } from "../utils/constatns";
 
 export type User = {
   id: number;
+  email: string;
   firstname: string;
   lastname: string;
   password: string;
 };
 
 export class UserController {
+
+  async getUserByEmail(email: string): Promise<User | null> {
+    try {
+      // Query And It's data
+      const userData = [email];
+      const sql = "SELECT email, firstname, lastname, password FROM users WHERE email=($1)";
+
+      // Connection
+      const conn = await client.connect();
+      const result = await conn.query(sql, userData);
+
+      // Result
+      const user = result.rows[0];
+
+      if(user === undefined)
+      return null;
+
+      // Release
+      conn.release();
+
+      return user;
+    } catch (err) {
+      throw new Error(`Unable to Get user with ID (${email}): ${err}`);
+    }
+  }
 
   async show(id: number): Promise<User | null> {
     try {
@@ -36,19 +60,14 @@ export class UserController {
     }
   }
 
-  async create(firstname: string, lastname: string, password: string): Promise<User> {
+  async create(email :string, firstname: string, lastname: string, passHash: string): Promise<User> {
     try {
-      // Prepare data
-      const hash = bcrypt.hashSync(
-        password + PEPPER,
-        parseInt(SALT_ROUNDS as string)
-      );
 
       // Query And It's data
-      const userData = [firstname, lastname, hash];
+      const userData = [email, firstname, lastname, passHash];
       const sql =
-        "INSERT INTO users (firstname, lastname, password_digest)" +
-        "VALUES($1, $2, $3) RETURNING *";
+        "INSERT INTO users (email, firstname, lastname, password_digest)" +
+        "VALUES($1, $2, $3, $4) RETURNING email, firstname, lastname";
 
       // Connection
       const conn = await client.connect();

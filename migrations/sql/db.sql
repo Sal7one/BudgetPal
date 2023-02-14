@@ -1,6 +1,7 @@
 
 CREATE TABLE users (
  id SERIAL PRIMARY KEY,
+ email VARCHAR(100) UNIQUE NOT NULL,
  firstname VARCHAR(100) NOT NULL,
  lastname VARCHAR(100) NOT NULL,
  password_digest VARCHAR(100) NOT NULL
@@ -18,8 +19,6 @@ CREATE TABLE articles (
   image_url text NOT NULL,
   published timestamp default current_timestamp
 );
-
-
 
  CREATE TABLE items (
   id SERIAL PRIMARY KEY,

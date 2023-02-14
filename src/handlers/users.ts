@@ -3,10 +3,13 @@ import verifyAuthToken from '../middlewares/auth';
 import {JWT_SECRET} from '../utils/constatns';
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
-import {UserController} from '../models/users';
+import {User, UserController} from '../models/users';
+import bcrypt from "bcrypt";
+import { PEPPER, SALT_ROUNDS } from "../utils/constatns";
 
 const usersRoutes = (app: express.Application) => {
-    app.get("/users/", verifyAuthToken , show);
+    app.get("/users", verifyAuthToken , show);
+    app.get("/users/login", login);
     app.post("/users", create);
 };
 
@@ -45,6 +48,62 @@ const show = async (
     }
 };
 
+const login = async (
+    req: express.Request,
+    res: express.Response
+) => {
+
+    // Request Body
+    let email : string = req.body.email as string;
+    let password : string = req.body.password as string;
+
+    if(email == undefined ||
+        email.replace(/ /g, "").length == 0
+    ){
+        res.status(400)
+        .json({error: "Bad Request: email Name Can't be empty"});
+        return;
+    }
+    if(
+
+     password == undefined ||
+     password.replace(/ /g, "").length == 0 
+     ){
+        res.status(400)
+        .json({error: "Bad Request: Password Can't be empty"});
+        return;
+    }
+
+    try {
+     // Validate as required here
+        email = email.replace(/ /g, "");
+        password =  password.replace(/ /g, "");
+      // Prepare data
+      const hash = bcrypt.hashSync(
+        password + PEPPER,
+        parseInt(SALT_ROUNDS as string)
+      );
+        // Get user
+        const foundUser = await userController.getUserByEmail(email);
+             if(foundUser != null){
+                if(foundUser.password == hash){
+                    const token = jwt.sign({user: getUserTokenObject(foundUser)}, JWT_SECRET as string);
+                    res.status(200)
+                    .json({token: token});
+                }else{
+                    res.status(403)
+                    .json({"message": "Email or Password is incorrect"});
+                }
+             }else{
+                res.json({message: "User does not exist"});
+             }
+
+    } catch (error) {
+        res.status(400)
+        .json(error);
+    }
+};
+
 const create = async (
     req: express.Request,
     res: express.Response
@@ -54,6 +113,7 @@ const create = async (
     let firstName : string = req.body.firstname as string;
     let lastName : string = req.body.lastname as string;
     let password : string = req.body.password as string;
+    let email : string = req.body.email as string;
 
     if(firstName == undefined ||
     firstName.replace(/ /g, "").length == 0
@@ -80,16 +140,31 @@ const create = async (
         .json({error: "Bad Request: Password Can't be empty"});
         return;
     }
-
+    
+    if(
+        email == undefined ||
+        email.replace(/ /g, "").length == 0 
+        ){
+           res.status(400)
+           .json({error: "Bad Request: Email Can't be empty"});
+           return;
+       }
+   
     try {
         // Validate as required here
+        email =  lastName.replace(/ /g, "");
         firstName = firstName.replace(/ /g, "");
         lastName =  lastName.replace(/ /g, "");
         password =  password.replace(/ /g, "");
         
+     // Prepare data
+      const hash = bcrypt.hashSync(
+        password + PEPPER,
+        parseInt(SALT_ROUNDS as string)
+      );
         // Create user
-        const createdUser = await userController.create(firstName, lastName, password);
-        const token = jwt.sign({user: createdUser}, JWT_SECRET as string);
+        const createdUser = await userController.create(email, firstName, lastName, hash);
+        const token = jwt.sign({user: getUserTokenObject(createdUser)}, JWT_SECRET as string);
         res.status(200)
         .json({token: token});
 
@@ -99,4 +174,13 @@ const create = async (
     }
 };
 
+
+function getUserTokenObject(user: User) {
+    return {
+         "email": user.email,
+         "firstname": user.firstname,
+         "lastname": user.lastname
+        }
+ }
+ 
 export default usersRoutes;
