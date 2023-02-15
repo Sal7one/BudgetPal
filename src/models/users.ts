@@ -14,7 +14,7 @@ export class UserController {
     try {
       // Query And It's data
       const userData = [email];
-      const sql = "SELECT email, firstname, lastname, password_digest FROM users WHERE email=($1)";
+      const sql = "SELECT id, email, firstname, lastname, password_digest FROM users WHERE email=($1)";
 
       // Connection
       const conn = await client.connect();

@@ -80,11 +80,6 @@ const login = async (
      // Validate as required here
         email = email.replace(/ /g, "");
         password =  password.replace(/ /g, "");
-      // Prepare data
-      const hash = bcrypt.hashSync(
-        password + PEPPER,
-        parseInt(SALT_ROUNDS as string)
-      );
         // Get user
         const foundUser = await userController.getUserByEmail(email);
              if(foundUser != null){
