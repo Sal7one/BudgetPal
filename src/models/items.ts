@@ -17,7 +17,7 @@ export class ItemController {
 
       // Query And It's data
       let dataForUserItemsQuery = [userId];
-      const sql = `SELECT it.item_name, it.item_price, c.category_name
+      const sql = `SELECT it.id, it.item_name, it.item_price, c.category_name
       FROM items AS it
       INNER JOIN categories as c ON c.id = it.category_id
       WHERE it.user_id = ($1) ORDER BY bought DESC`;
