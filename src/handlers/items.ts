@@ -78,8 +78,6 @@ const create = async (
         return;
     }
 
-    category =  category.replace(/ /g, "");
-
     const actualCategoryId : number =  Categories.indexOf(category.toLowerCase());
 
     if(actualCategoryId < 1 || actualCategoryId > 9){
