@@ -130,18 +130,6 @@ BODY RAW JSON
 
 ```
 
-Response
-```
-
-{
-    "product": {
-        "id": 2,
-        "name": "BookAboutProgramming",
-        "price": "123"
-    }
-}
-
-```
 
 
 Articles Route
